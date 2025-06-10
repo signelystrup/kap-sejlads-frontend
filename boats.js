@@ -40,8 +40,6 @@ export function displayAllBoats(){
 }
 
 function addBoat(){
-
-
     const modal = createModal();
 
     const header = document.createElement("h2");
@@ -49,30 +47,8 @@ function addBoat(){
     modal.append(header);
 
     //CREATE FORM:
-    clearForm();
+    createBoatForm();
     modal.append(form);
-
-    //Create radio buttons for boat sizes (enum):
-    const moreThan40Label = createLabel("more-than-40-feet", ">40 fod");
-    const moreThan40Input = createInput("radio", moreThan40Label, "boatType");
-    moreThan40Input.value = 2; //set enum value
-
-    const between25And40Label = createLabel("between-25-and-40-feet", "25-40 fod");
-    const between25And40Input = createInput("radio", between25And40Label, "boatType");
-    between25And40Input.value = 1;
-
-    const lessThan25Label = createLabel ("less-than-25-feet", "<25 fod");
-    const lessThan25Input = createInput("radio", lessThan25Label, "boatType");
-    lessThan25Input.value = 0;
-
-    //participants. Should be dropdown or checkboxes . maybe with search.
-    const participantLabel = createLabel("participant", "deltager");
-    const participantInput = createInput("text", participantLabel, "participant");
-
-    const button = document.createElement("button");
-    button.innerText = "Tilføj";
-    button.type = "submit";
-    form.append(button);
 
     //GET USER INPUT
     form.addEventListener("submit", event  => {
@@ -96,37 +72,15 @@ function addBoat(){
 function updateBoat(oldBoat){
     // insert boat current data.
 
-
     const modal = createModal();
+
     const header = document.createElement("h2");
     header.innerText = "Rediger båd";
     modal.append(header);
 
     //FORM:
     modal.append(form);
-    clearForm();
-
-    //Create radio buttons for boat sizes (enum):
-    const moreThan40Label = createLabel("more-than-40-feet", ">40 fod");
-    const moreThan40Input = createInput("radio", moreThan40Label, "boatType");
-    moreThan40Input.value = 2; //set enum value
-
-    const between25And40Label = createLabel("between-25-and-40-feet", "25-40 fod");
-    const between25And40Input = createInput("radio", between25And40Label, "boatType");
-    between25And40Input.value = 1;
-
-    const lessThan25Label = createLabel ("less-than-25-feet", "<25 fod");
-    const lessThan25Input = createInput("radio", lessThan25Label, "boatType");
-    lessThan25Input.value = 0;
-
-    //participants. Should be dropdown or checkboxes . maybe with search.
-    const participantLabel = createLabel("participant", "deltager");
-    const participantInput = createInput("text", participantLabel, "participant");
-
-    const button = document.createElement("button");
-    button.innerText = "Opdater";
-    button.type = "submit";
-    form.append(button);
+    createBoatForm();
 
     //GET USER INPUT
     form.addEventListener("submit", event  => {
@@ -205,6 +159,32 @@ function addButton(){
     });
 
     return addButton;
+}
+
+function createBoatForm(){
+    clearForm();
+
+    //Create radio buttons for boat sizes (enum):
+    const moreThan40Label = createLabel("more-than-40-feet", ">40 fod");
+    const moreThan40Input = createInput("radio", moreThan40Label, "boatType");
+    moreThan40Input.value = 2; //set enum value
+
+    const between25And40Label = createLabel("between-25-and-40-feet", "25-40 fod");
+    const between25And40Input = createInput("radio", between25And40Label, "boatType");
+    between25And40Input.value = 1;
+
+    const lessThan25Label = createLabel ("less-than-25-feet", "<25 fod");
+    const lessThan25Input = createInput("radio", lessThan25Label, "boatType");
+    lessThan25Input.value = 0;
+
+    //participants. Should be dropdown or checkboxes . maybe with search.
+    const participantLabel = createLabel("participant", "deltager");
+    const participantInput = createInput("text", participantLabel, "participant");
+
+    const button = document.createElement("button");
+    button.innerText = "Opdater";
+    button.type = "submit";
+    form.append(button);
 }
 
 displayAllBoats();
