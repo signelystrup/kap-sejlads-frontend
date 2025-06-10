@@ -3,11 +3,9 @@ const url = "http://localhost:8080"
 export function getAll(endpoint){
     return fetch(url + endpoint)
         .then(response => {
-            if (!response.ok){
-                console.log("error fetching: GET " + url + endpoint);
-            }
-
+            console.log("GET: " + url + endpoint + " : " + response.status);
             return response.json();
+
         }).catch(error => console.error(error));
 }
 
@@ -25,10 +23,7 @@ export function add (endpoint, responseBody){
         body: JSON.stringify(responseBody) //send entity to backend
 
         }).then(response => {
-            if (!response.ok){
-                console.log("error fetching: POST " + url + endpoint)
-            }
-
+            console.log("POST: " + url + endpoint + " : " + response.status);
             return response.json();
 
     }).catch(error => console.error(error));
@@ -43,19 +38,16 @@ export function update (endpoint, id, responseBody){
         body: JSON.stringify(responseBody) //send entity to backend
 
     }).then(response => {
-        if (!response.ok){
-            console.log("error fetching: PUT " + url + endpoint)
-        }
-
+        console.log("PUT: " + url + endpoint + + "/" + id + " : " + response.status);
         return response.json();
-
     }).catch(error => console.error(error));
 }
 
 export function deleteEntity (endpoint, id){
     return fetch(url + endpoint + "/" + id, {
         method: 'DELETE'
-    }).catch(error => console.error(error));
+    }).then(response => console.log("DELETE: " + url + endpoint + "/" + id + " : " + response.status))
+        .catch(error => console.error(error));
 }
 
 //test POST:
@@ -71,7 +63,7 @@ getById("/boat", 1).then(boat => {
 })
 
 //test DELETE:
-deleteEntity("/boat", 4).then(()=> console.log("successfully deleted: " + "/boat/" + 4));
+deleteEntity("/boat", 4);
 
 
 
