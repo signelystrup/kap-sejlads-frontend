@@ -50,6 +50,8 @@ export function deleteEntity (endpoint, id){
         .catch(error => console.error(error));
 }
 
+/*
+
 //test POST:
 getById("/boat", 1).then(boat => { //get boat object.
     delete boat.id; //remove id from boat object.
@@ -66,4 +68,4 @@ getById("/boat", 1).then(boat => {
 deleteEntity("/boat", 4);
 
 
-
+*/

@@ -1,0 +1,21 @@
+.card {
+    border: 1px solid black;
+    display: inline-block;
+    padding: 5px;
+    margin: 2px;
+    background-color: aliceblue;
+    width: 20%;
+}
+
+.container {
+
+
+}
+
+button {
+    min-width: 5%;
+    min-height: 5%;
+    display: block;
+    background-color: cornflowerblue;
+}
+
