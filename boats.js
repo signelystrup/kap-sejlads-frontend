@@ -1,6 +1,7 @@
 import {add, deleteEntity, getAll, getById, update} from './fetch.js';
-const body = document.querySelector("body");
-let boatList = [];
+import {createModal} from "./modal.js";
+
+export const body = document.querySelector("body");
 
 export function displayAllBoats(){
 
@@ -34,28 +35,31 @@ export function displayAllBoats(){
         });
     });
 
-   // getById("/boat", 1);
 
 }
 
 export function createNewBoat(){
     // create form.
     // construct object from form data.
-
-    add("/boat", "response body boat");
+    console.log("add");
+    getById("/boat", 1).then(boat => {
+        delete boat.id;
+        add("/boat", boat);
+    });
 }
 
 export function updateBoat(){
     //create form.
     // insert boat current data.
     // construct object from updated data.
-
-    update("/boat", 1, "response body boat");
+    console.log("update");
+    getById("/boat", 1).then(boat => update("/boat", 1, boat));
 }
 
 export function deleteBoat(){
     //create modal/alert
 
+    console.log("delete");
     deleteEntity("/boat", 1);
 }
 
@@ -72,6 +76,11 @@ function createBoatCard(boat){
 function deleteButton() {
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "slet";
+
+    deleteButton.addEventListener("click", ()=> {
+        createModal();
+        deleteBoat();
+    });
     return deleteButton;
 }
 
@@ -79,12 +88,22 @@ function updateButton(){
     const updateButton = document.createElement("button");
     updateButton.innerText = "opdater";
 
+    updateButton.addEventListener("click", ()=> {
+        createModal();
+        updateBoat();
+    });
     return updateButton;
 }
 
 function addButton(){
     const addButton = document.createElement("button");
     addButton.innerText = "Tilføj";
+
+    addButton.addEventListener("click", ()=> {
+        createModal();
+        createNewBoat();
+    });
+
     return addButton;
 }
 
