@@ -59,8 +59,15 @@ function addBoat(){
     createBoatForm();
     modal.append(form);
 
+    const button = document.createElement("button");
+    button.innerText = "Opret";
+    button.type = "submit";
+    form.append(button);
+
     //GET USER INPUT
-    form.addEventListener("submit", event  => {
+    form.addEventListener("submit", eventListener);
+
+    function eventListener (event) {
         event.preventDefault();
 
         //construct boat object from user input.
@@ -75,7 +82,10 @@ function addBoat(){
         });
 
         overlay.remove(); //close modal.
-    });
+        form.removeEventListener("submit", event);
+    }
+
+    form.removeEventListener("submit", eventListener);
 }
 
 function updateBoat(oldBoat){
@@ -111,9 +121,15 @@ function updateBoat(oldBoat){
     });
 */
 
+    const button = document.createElement("button");
+    button.innerText = "Opdater";
+    button.type = "submit";
+    form.append(button);
 
     //GET USER INPUT
-    form.addEventListener("submit", event  => {
+    form.addEventListener("submit", eventListener);
+
+    function eventListener (event){
         event.preventDefault();
 
         //construct new boat object from user input.
@@ -123,13 +139,18 @@ function updateBoat(oldBoat){
             participant: null //change later
         };
 
-        update("/boat", newBoat.id, newBoat).then(()=> { //Save new boat.
+        update("/boat", oldBoat.id, newBoat).then(()=> { //Save new boat.
             body.innerHTML = "";
             displayAllBoats(); //update all boats page.
         });
 
         overlay.remove(); //close modal.
-    });
+
+        form.removeEventListener("submit", eventListener);
+    }
+
+
+
 }
 
 function deleteBoat(boat){
@@ -190,11 +211,6 @@ function createBoatForm(){
     //participants. Should be dropdown or checkboxes . maybe with search.
     const participantLabel = createLabel("participant", "deltager");
     const participantInput = createInput("text", participantLabel, "participant");
-
-    const button = document.createElement("button");
-    button.innerText = "Opdater";
-    button.type = "submit";
-    form.append(button);
 }
 
 displayAllBoats();

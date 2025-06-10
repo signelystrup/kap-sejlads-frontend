@@ -38,7 +38,7 @@ export function update (endpoint, id, responseBody){
         body: JSON.stringify(responseBody) //send entity to backend
 
     }).then(response => {
-        console.log("PUT: " + url + endpoint + + "/" + id + " : " + response.status);
+        console.log("PUT: " + url + endpoint + "/" + id + " : " + response.status);
         return response.json();
     }).catch(error => console.error(error));
 }

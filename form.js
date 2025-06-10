@@ -23,7 +23,11 @@ export function createInput(type, label, name){
 }
 
 export function clearForm(){
+    form.replaceWith(form.cloneNode(true));
     form.innerHTML = "";
-    form.remove();
+    //form.remove();
+    //
+    /*
+    form.removeEventListener("submit", SubmitEvent);*/
 }
 
