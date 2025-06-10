@@ -12,7 +12,11 @@ export function displayAllBoats(){
     boatCardContainer.classList.add("boat");
     boatCardContainer.classList.add("container");
 
-    boatCardContainer.append(addButton()); //create add button.
+    //create add button.
+    const addButton = document.createElement("button");
+    addButton.innerText = "Tilføj";
+    addButton.addEventListener("click", ()=> addBoat());
+    boatCardContainer.append(addButton);
 
     //fetch all boats. Create boat cards, so we can display them on html.
     getAll("/boat/all")
@@ -24,15 +28,17 @@ export function displayAllBoats(){
                 participants: boats.participants
             }
 
+            //boat cards:
             const boatCard = createBoatCard(boat);
             boatCardContainer.append(boatCard);
 
-            //create buttons.
+            //delete button
             const deleteButton = document.createElement("button");
             deleteButton.innerText = "Slet";
             deleteButton.addEventListener("click", ()=> deleteBoat(boat));
             boatCard.append(deleteButton);
 
+            //update button
             const updateButton = document.createElement("button");
             updateButton.innerText = "opdater";
             updateButton.addEventListener("click", ()=> updateBoat(boat));
@@ -91,6 +97,7 @@ function updateBoat(oldBoat){
 
         //construct new boat object from user input.
         const newBoat = {
+            id: oldBoat.id,
             boatType: parseInt(event.target.boatType.value), //get user input from radio buttons as int (enum)
             participant: null //change later
         };
@@ -143,12 +150,7 @@ function createBoatCard(boat){
 }
 
 function addButton(){
-    const addButton = document.createElement("button");
-    addButton.innerText = "Tilføj";
 
-    addButton.addEventListener("click", ()=> {
-        addBoat();
-    });
 
     return addButton;
 }
