@@ -1,5 +1,6 @@
 import {add, deleteEntity, getAll, getById, update} from './fetch.js';
 import {createModal, overlay} from "./modal.js";
+import {clearForm, createInput, createLabel, form} from "./form.js";
 
 export const body = document.querySelector("body");
 
@@ -39,9 +40,7 @@ export function displayAllBoats(){
 }
 
 function addBoat(){
-    // create form.
-    // construct object from form data.
-    console.log("add");
+
 
     const modal = createModal();
 
@@ -50,30 +49,8 @@ function addBoat(){
     modal.append(header);
 
     //CREATE FORM:
-    const form = document.createElement("form");
+    clearForm();
     modal.append(form);
-
-    function createLabel(labelFor, innerText){
-        const label = document.createElement("label");
-        form.append(label);
-        label.for = labelFor;
-        label.innerText = innerText;
-
-        return label;
-    }
-
-    function createInput(type, label, name){
-        const input = document.createElement("input");
-        form.append(input);
-        input.type = type;
-        input.id = label.for;
-        input.name = name;
-
-        const br = document.createElement("br"); //create break
-        form.append(br);
-
-        return input;
-    }
 
     //Create radio buttons for boat sizes (enum):
     const moreThan40Label = createLabel("more-than-40-feet", ">40 fod");
@@ -116,12 +93,58 @@ function addBoat(){
     });
 }
 
-function updateBoat(boat){
-    //create form.
+function updateBoat(oldBoat){
     // insert boat current data.
-    // construct object from updated data.
-    console.log("update");
-    getById("/boat", 1).then(boat => update("/boat", 1, boat));
+
+
+    const modal = createModal();
+    const header = document.createElement("h2");
+    header.innerText = "Rediger båd";
+    modal.append(header);
+
+    //FORM:
+    modal.append(form);
+    clearForm();
+
+    //Create radio buttons for boat sizes (enum):
+    const moreThan40Label = createLabel("more-than-40-feet", ">40 fod");
+    const moreThan40Input = createInput("radio", moreThan40Label, "boatType");
+    moreThan40Input.value = 2; //set enum value
+
+    const between25And40Label = createLabel("between-25-and-40-feet", "25-40 fod");
+    const between25And40Input = createInput("radio", between25And40Label, "boatType");
+    between25And40Input.value = 1;
+
+    const lessThan25Label = createLabel ("less-than-25-feet", "<25 fod");
+    const lessThan25Input = createInput("radio", lessThan25Label, "boatType");
+    lessThan25Input.value = 0;
+
+    //participants. Should be dropdown or checkboxes . maybe with search.
+    const participantLabel = createLabel("participant", "deltager");
+    const participantInput = createInput("text", participantLabel, "participant");
+
+    const button = document.createElement("button");
+    button.innerText = "Opdater";
+    button.type = "submit";
+    form.append(button);
+
+    //GET USER INPUT
+    form.addEventListener("submit", event  => {
+        event.preventDefault();
+
+        //construct new boat object from user input.
+        const newBoat = {
+            boatType: parseInt(event.target.boatType.value), //get user input from radio buttons as int (enum)
+            participant: null //change later
+        };
+
+        update("/boat", newBoat.id, newBoat).then(()=> { //Save new boat.
+            body.innerHTML = "";
+            displayAllBoats(); //update all boats page.
+        });
+
+        overlay.remove(); //close modal.
+    });
 }
 
 function deleteBoat(boat){
@@ -168,8 +191,7 @@ function updateButton(boat){
     updateButton.innerText = "opdater";
 
     updateButton.addEventListener("click", ()=> {
-        const modal = createModal();
-        updateBoat();
+        updateBoat(boat);
     });
     return updateButton;
 }

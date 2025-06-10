@@ -15,6 +15,7 @@ export function createModal(){
     modal.append(closeButton);
     closeButton.innerText = "x"; // "&times;";
     closeButton.addEventListener("click", ()=> {
+        modal.innerHTML = ""; //clear modal
         overlay.remove();
     });
 
