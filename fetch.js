@@ -53,7 +53,9 @@ export function update (endpoint, id, responseBody){
 }
 
 export function deleteEntity (endpoint, id){
-
+    return fetch(url + endpoint + "/" + id, {
+        method: 'DELETE'
+    }).catch(error => console.error(error));
 }
 
 //test POST:
@@ -67,6 +69,9 @@ getById("/boat", 1).then(boat => {
     boat.boatType = 2;
     update("/boat", 42, boat).then(boat =>console.log(boat));
 })
+
+//test DELETE:
+deleteEntity("/boat", 4).then(()=> console.log("successfully deleted: " + "/boat/" + 4));
 
 
 
