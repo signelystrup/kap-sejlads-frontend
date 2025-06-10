@@ -27,16 +27,18 @@ export function displayAllBoats(){
             boatCardContainer.append(boatCard);
 
             //create buttons.
-            boatCard.append(deleteButton(boat.id));
+            const deleteButton = document.createElement("button");
+            deleteButton.innerText = "Slet";
+            deleteButton.addEventListener("click", ()=> deleteBoat(boat));
+            boatCard.append(deleteButton);
+
             boatCard.append(updateButton(boat));
 
-        });
-    });
-
-
+        });//end of data.map
+    }); //end of .then(data)
 }
 
-export function addBoat(){
+function addBoat(){
     // create form.
     // construct object from form data.
     console.log("add");
@@ -114,7 +116,7 @@ export function addBoat(){
     });
 }
 
-export function updateBoat(boat){
+function updateBoat(boat){
     //create form.
     // insert boat current data.
     // construct object from updated data.
@@ -122,11 +124,32 @@ export function updateBoat(boat){
     getById("/boat", 1).then(boat => update("/boat", 1, boat));
 }
 
-export function deleteBoat(id){
+function deleteBoat(boat){
     //create modal/alert
 
     console.log("delete");
-    deleteEntity("/boat", 1);
+    const modal = createModal();
+    modal.classList.add("small");
+
+    const confirmHeader = document.createElement("h2");
+    modal.append(confirmHeader);
+    confirmHeader.innerText = "Er du sikker på, at du vil slette båden?"
+
+    const boatCard = createBoatCard(boat)
+    modal.append(boatCard);
+
+    const confirmButton = document.createElement("button");
+    modal.append(confirmButton);
+    confirmButton.innerText = "Bekræft";
+
+    confirmButton.addEventListener("click", ()=> {
+        deleteEntity("/boat", boat.id)
+            .then(() => {
+                body.innerHTML = "";
+                displayAllBoats(); //update all boats page.
+            });
+    });
+
 }
 
 function createBoatCard(boat){
@@ -139,16 +162,6 @@ function createBoatCard(boat){
     return boatCard;
 }
 
-function deleteButton(id) {
-    const deleteButton = document.createElement("button");
-    deleteButton.innerText = "slet";
-
-    deleteButton.addEventListener("click", ()=> {
-        const modal = createModal();
-        deleteBoat();
-    });
-    return deleteButton;
-}
 
 function updateButton(boat){
     const updateButton = document.createElement("button");

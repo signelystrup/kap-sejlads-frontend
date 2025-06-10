@@ -7,11 +7,6 @@
     width: 20%;
 }
 
-.container {
-
-
-}
-
 button {
     padding: 5px;
     margin: 2px;
@@ -49,3 +44,8 @@ button {
     text-align: center;
 }
 
+.modal.small{
+    width: 30%;
+    height: 300px;
+    
+}
