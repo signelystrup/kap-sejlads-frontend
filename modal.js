@@ -1,14 +1,15 @@
 import {body} from "./boats.js";
+export let overlay;
 
 export function createModal(){
-    const overlay = document.createElement("div");
+    overlay = document.createElement("div");
     overlay.classList.add("overlay");
     body.append(overlay);
 
     const modal = document.createElement("div");
     overlay.append(modal);
     modal.classList.add("modal");
-    modal.innerText = "This is a modal";
+
 
     const closeButton = document.createElement("button");
     modal.append(closeButton);
@@ -17,5 +18,5 @@ export function createModal(){
         overlay.remove();
     });
 
-
+    return modal;
 }

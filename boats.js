@@ -1,22 +1,19 @@
 import {add, deleteEntity, getAll, getById, update} from './fetch.js';
-import {createModal} from "./modal.js";
+import {createModal, overlay} from "./modal.js";
 
 export const body = document.querySelector("body");
 
 export function displayAllBoats(){
 
-    //display with dom
-    //create post button
-    //create update and delete buttons.
-    //extra: create view specific boat button.
-
+    //holds cards.
     const boatCardContainer = document.createElement("div");
     body.append(boatCardContainer);
     boatCardContainer.classList.add("boat");
     boatCardContainer.classList.add("container");
 
-    boatCardContainer.append(addButton());
+    boatCardContainer.append(addButton()); //create add button.
 
+    //fetch all boats. Create boat cards, so we can display them on html.
     getAll("/boat/all")
         .then(data => {
         data.map(boats => {
@@ -29,8 +26,9 @@ export function displayAllBoats(){
             const boatCard = createBoatCard(boat);
             boatCardContainer.append(boatCard);
 
-            boatCard.append(deleteButton());
-            boatCard.append(updateButton());
+            //create buttons.
+            boatCard.append(deleteButton(boat.id));
+            boatCard.append(updateButton(boat));
 
         });
     });
@@ -38,17 +36,85 @@ export function displayAllBoats(){
 
 }
 
-export function createNewBoat(){
+export function addBoat(){
     // create form.
     // construct object from form data.
     console.log("add");
-    getById("/boat", 1).then(boat => {
-        delete boat.id;
-        add("/boat", boat);
+
+    const modal = createModal();
+
+    const header = document.createElement("h2");
+    header.innerText = "Opret ny båd";
+    modal.append(header);
+
+    //CREATE FORM:
+    const form = document.createElement("form");
+    modal.append(form);
+
+    function createLabel(labelFor, innerText){
+        const label = document.createElement("label");
+        form.append(label);
+        label.for = labelFor;
+        label.innerText = innerText;
+
+        return label;
+    }
+
+    function createInput(type, label, name){
+        const input = document.createElement("input");
+        form.append(input);
+        input.type = type;
+        input.id = label.for;
+        input.name = name;
+
+        const br = document.createElement("br"); //create break
+        form.append(br);
+
+        return input;
+    }
+
+    //Create radio buttons for boat sizes (enum):
+    const moreThan40Label = createLabel("more-than-40-feet", ">40 fod");
+    const moreThan40Input = createInput("radio", moreThan40Label, "boatType");
+    moreThan40Input.value = 2; //set enum value
+
+    const between25And40Label = createLabel("between-25-and-40-feet", "25-40 fod");
+    const between25And40Input = createInput("radio", between25And40Label, "boatType");
+    between25And40Input.value = 1;
+
+    const lessThan25Label = createLabel ("less-than-25-feet", "<25 fod");
+    const lessThan25Input = createInput("radio", lessThan25Label, "boatType");
+    lessThan25Input.value = 0;
+
+    //participants. Should be dropdown or checkboxes . maybe with search.
+    const participantLabel = createLabel("participant", "deltager");
+    const participantInput = createInput("text", participantLabel, "participant");
+
+    const button = document.createElement("button");
+    button.innerText = "Tilføj";
+    button.type = "submit";
+    form.append(button);
+
+    //GET USER INPUT
+    form.addEventListener("submit", event  => {
+        event.preventDefault();
+
+        //construct boat object from user input.
+        const boat = {
+            boatType: parseInt(event.target.boatType.value), //get user input from radio buttons as int (enum)
+            participant: null //change later
+        };
+
+        add("/boat", boat).then(()=> { //Save new boat.
+            body.innerHTML = "";
+            displayAllBoats(); //update all boats page.
+        });
+
+        overlay.remove(); //close modal.
     });
 }
 
-export function updateBoat(){
+export function updateBoat(boat){
     //create form.
     // insert boat current data.
     // construct object from updated data.
@@ -56,7 +122,7 @@ export function updateBoat(){
     getById("/boat", 1).then(boat => update("/boat", 1, boat));
 }
 
-export function deleteBoat(){
+export function deleteBoat(id){
     //create modal/alert
 
     console.log("delete");
@@ -73,23 +139,23 @@ function createBoatCard(boat){
     return boatCard;
 }
 
-function deleteButton() {
+function deleteButton(id) {
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "slet";
 
     deleteButton.addEventListener("click", ()=> {
-        createModal();
+        const modal = createModal();
         deleteBoat();
     });
     return deleteButton;
 }
 
-function updateButton(){
+function updateButton(boat){
     const updateButton = document.createElement("button");
     updateButton.innerText = "opdater";
 
     updateButton.addEventListener("click", ()=> {
-        createModal();
+        const modal = createModal();
         updateBoat();
     });
     return updateButton;
@@ -100,11 +166,12 @@ function addButton(){
     addButton.innerText = "Tilføj";
 
     addButton.addEventListener("click", ()=> {
-        createModal();
-        createNewBoat();
+        addBoat();
     });
 
     return addButton;
 }
 
 displayAllBoats();
+
+
