@@ -33,7 +33,10 @@ export function displayAllBoats(){
             deleteButton.addEventListener("click", ()=> deleteBoat(boat));
             boatCard.append(deleteButton);
 
-            boatCard.append(updateButton(boat));
+            const updateButton = document.createElement("button");
+            updateButton.innerText = "opdater";
+            updateButton.addEventListener("click", ()=> updateBoat(boat));
+            boatCard.append(updateButton);
 
         });//end of data.map
     }); //end of .then(data)
@@ -137,17 +140,6 @@ function createBoatCard(boat){
     boatCard.innerText = "id: " + boat.id + "\ntype: " + boat.boatType + "\nparticipants: " + boat.participants;
 
     return boatCard;
-}
-
-
-function updateButton(boat){
-    const updateButton = document.createElement("button");
-    updateButton.innerText = "opdater";
-
-    updateButton.addEventListener("click", ()=> {
-        updateBoat(boat);
-    });
-    return updateButton;
 }
 
 function addButton(){
