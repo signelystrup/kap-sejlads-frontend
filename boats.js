@@ -88,56 +88,29 @@ function updateBoat(oldBoat){
     modal.append(header);
 
     //FORM:
-    modal.append(form);
     createBoatForm();
+    modal.append(form);
 
-    /*
-let elements = []; //get form.elements as array (elements)
-
-for (let i = 0; i < form.elements; i++){
-    elements.push(form.elements[i]);
-}
-
-
-const valueEquals1 = elements.some(e => parseInt(e.value) === 1);
-console.log("value === 1: " + valueEquals1);
-console.log(elements.length);
-*/
-
-    console.log(form.elements);
-    console.log(findInputElement());
-
-    for (let i = 0; i < form.elements; i++){
-
-    }
-
-    function findInputElement(){
-        const input = document.querySelector("input");
-
-        console.log(2 === parseInt(input.value));
-
-
-
-        return input;
-
-    }
-
-
-   // const valueEquals0 = document.querySelector('<input value="0"/>');//inputs.find(input => input.attributes.value === 0)
-//    const el = document.querySelector("input[name='boatType' value='0']");
+    //set default values from oldBoat.
     const inputs = document.querySelectorAll("input");
-    console.log(inputs);
 
     inputs.forEach(input => {
-        if (parseInt(input.value) === 0 && input.name === "boatType"){
+        if (parseInt(input.value) === oldBoat.boatType && input.name === "boatType"){ //if input boat type and value are the same, check box.
+            input.checked = true;
+        }
+    });
+
+    /*
+    //one for participants, also:
+    inputs.forEach(input => {
+        if (input.value === 0 && input.name === "boatType"){ //if input boat type and value are the same, check box.
             input.checked = true;
 
             console.log("input found");
         }
-        console.log(input.value)
     });
+*/
 
-   // inputs.filter(input => input.value === 0 && input.name === "boatType"));
 
     //GET USER INPUT
     form.addEventListener("submit", event  => {

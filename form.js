@@ -24,5 +24,6 @@ export function createInput(type, label, name){
 
 export function clearForm(){
     form.innerHTML = "";
+    form.remove();
 }
 
