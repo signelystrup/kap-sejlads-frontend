@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f4807caf-1b2d-495a-b15a-d30fa0882449" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch.js" beforeDir="false" afterPath="$PROJECT_DIR$/fetch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boats.js" beforeDir="false" afterPath="$PROJECT_DIR$/boats.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +16,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -39,6 +40,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -63,7 +65,8 @@
       <option name="presentableId" value="Default" />
       <updated>1749462552414</updated>
       <workItem from="1749462553698" duration="3721000" />
-      <workItem from="1749542384024" duration="2771000" />
+      <workItem from="1749542384024" duration="29588000" />
+      <workItem from="1749633610109" duration="1467000" />
     </task>
     <servers />
   </component>

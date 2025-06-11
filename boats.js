@@ -76,16 +76,17 @@ function addBoat(){
             participant: null //change later
         };
 
+        console.log(boat); //remove
+
         add("/boat", boat).then(()=> { //Save new boat.
             body.innerHTML = "";
             displayAllBoats(); //update all boats page.
         });
 
         overlay.remove(); //close modal.
-        form.removeEventListener("submit", event);
+        form.removeEventListener("submit", eventListener);
     }
 
-    form.removeEventListener("submit", eventListener);
 }
 
 function updateBoat(oldBoat){
